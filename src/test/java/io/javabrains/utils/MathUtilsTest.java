@@ -2,9 +2,7 @@ package io.javabrains.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class MathUtilsTest {
 	
@@ -12,7 +10,8 @@ class MathUtilsTest {
 	
 	
 	@BeforeEach
-	void initEach() {
+	void initEach(TestInfo testInfo, TestReporter testReporter) {
+		testReporter.publishEntry(testInfo.getDisplayName()+ " starts");
 		mathUtils = new MathUtils();
 	}
 
@@ -24,8 +23,9 @@ class MathUtilsTest {
 					"Add method should return the sum of two numbers");
 		}
 		
-		@Test
-		void testAddingTwoNegatives() {
+		@RepeatedTest(3)
+		void testAddingTwoNegatives(RepetitionInfo repetitionInfo) {
+			System.out.println("Repetition :" + repetitionInfo.getCurrentRepetition());
 			assertEquals(-2, mathUtils.add(-1, -1), 
 					"Add method should return the sum of two numbers");
 		}
